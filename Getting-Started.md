@@ -14,7 +14,7 @@ the bash shell would help, but will not be necessary.
 To make sure you are setup properly, open the Git Bash command line, and change into your working 
 directory (paths in Git Bash use the `/` separator character). For example:
 
->     $ cd /e/working/directory
+    $ cd /e/working/directory
 
 changes into the Windows directory `E:\working\directory` (you can use upper or 
 lower case drive letters).
@@ -32,21 +32,21 @@ CodePlex. The project site URL is http://orchard.codeplex.com/, but we're intere
 *source code URL*, pointing to the git repository that controls Orchard source. From Git Bash
 type the following command:
 
->     $ git clone https://git01.codeplex.com/orchard OrchardDev
+    $ git clone https://git01.codeplex.com/orchard OrchardDev
 
 This clones the git repository into the local folder `OrchardDev` inside your working directory. 
 Verify that the clone worked by doing the following:
 
->     $ cd OrchardDev
->     $ git status
+    $ cd OrchardDev
+    $ git status
 
 You should see output similar to:
 
->     $ git status
->     On branch master
->     Your branch is up-to-date with 'origin/master'.
->
->     nothing to commit, working directory clean
+    $ git status
+    On branch master
+    Your branch is up-to-date with 'origin/master'.
+    
+    nothing to commit, working directory clean
 
 As stated, we are on the `master` branch - we are viewing the Orchard source code as it exists in 
 the `master` branch. This is the release branch, which always contains the source code for the 
@@ -56,26 +56,26 @@ For developing the latest and greatest, we want to checkout (or switch to) the `
 active development branch. If you're developing against a different branch (e.g. `1.8.x`) the 
 procedure is similar.
 
->     $ git checkout 1.x
+    $ git checkout 1.x
 
 This "switches" branches to `1.x`, and in effect gives us a different view of the files (you'll notice
 the messages about downloading changes). Similarly, we can get status information:
 
->     $ git status
->     On branch 1.x
->     Your branch is up-to-date with 'origin/1.x'.
->
->     nothing to commit, working directory clean
+    $ git status
+    On branch 1.x
+    Your branch is up-to-date with 'origin/1.x'.
+    
+    nothing to commit, working directory clean
 
 Anytime you want to get the recent changes checked in by the community, simply run:
 
->     $ git pull origin 1.x
+    $ git pull origin 1.x
 
 ### A bit of indirection
 
 Open up `OrchardDev` in Windows Explorer and you should see Orchard's standard directory layout:
 
->     /OrchardDev
+    /OrchardDev
         /.git
         /lib
         /src
@@ -86,8 +86,8 @@ Notice the `/.git` subdirectory - this is where git maintains its information on
 For reasons that will become clear later (I promise!), we are going to **move** this `/.git` directory!
 Again from Git Bash (and your *working directory*), enter the following commands: 
 
->     $ mv OrchardDev/.git  ./.git_OrchardDev  
->     $ echo "gitdir: E:/working/directory/.git_OrchardDev" > OrchardDev/.git
+    $ mv OrchardDev/.git  ./.git_OrchardDev  
+    $ echo "gitdir: E:/working/directory/.git_OrchardDev" > OrchardDev/.git
 
 Of course, replace `E:/working/directory/` with the path to your 
 working directory. 
@@ -123,23 +123,23 @@ for a theme).
 Drop back into Git Bash. We're about to get cross platform! Change into the `Orchard.Web` 
 directory (from your *working directory*):
 
->     $ cd OrchardDev/src/Orchard.Web
+    $ cd OrchardDev/src/Orchard.Web
 
 and activate `cmd`! It should look similar to:
 
->     $ cmd
->     Microsoft Windows [Version 6.1.7601]
->     Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
->
->     e:\working\directory\OrchardDev\src\Orchard.Web>
+    $ cmd
+    Microsoft Windows [Version 6.1.7601]
+    Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
+    
+    e:\working\directory\OrchardDev\src\Orchard.Web>
 
 Activating the Orchard command line:
 
->     e:\working\directory\OrchardDev\src\Orchard.Web> bin\Orchard.exe
->     Initializing Orchard session. (This might take a few seconds...)
->     Type "?" for help, "exit" to exit, "cls" to clear screen
->
->     orchard>
+    e:\working\directory\OrchardDev\src\Orchard.Web> bin\Orchard.exe
+    Initializing Orchard session. (This might take a few seconds...)
+    Type "?" for help, "exit" to exit, "cls" to clear screen
+    
+    orchard>
 
 Many Orchard modules define commands that are available from the Orchard command line. 
 You can even define your own commands from a custom module!  
@@ -148,9 +148,9 @@ commands.
 
 So let's create a module! (for now, we won't include it in the solution).
 
->     orchard> codegen module NewModule /IncludeInSolution:false
->     Creating Module NewModule
->     Module NewModule created successfully
+    orchard> codegen module NewModule /IncludeInSolution:false
+    Creating Module NewModule
+    Module NewModule created successfully
 
 This creates a folder called `NewModule` inside `E:\working\directory\OrchardDev\src\Orchard.Web\Modules`, and sets up a 
 default module structure: the `Module.txt` (module manifest), `NewModule.csproj` and 
@@ -163,15 +163,15 @@ use TFS, but git or others would work as well.
 
 Let's exit out of Orchard's command line program:
 
->     orchard> exit
->     
->     e:\working\directory\OrchardDev\src\Orchard.Web>
+    orchard> exit
+    
+    e:\working\directory\OrchardDev\src\Orchard.Web>
 
 Notice we're still in Windows `cmd` - this is good. We're going to do some more indirection, and 
 move our module folder outside of Orchard's source tree. This is to keep Orchard as clean and 
 vanilla as possible. Move `NewModule` up into your original *working directory*:
 
->     e:\working\directory\OrchardDev\src\Orchard.Web> move Modules\NewModule ..\..\..\NewModule\Main
+    e:\working\directory\OrchardDev\src\Orchard.Web> move Modules\NewModule ..\..\..\NewModule\Main
 
 Notice we moved it to `e:\working\directory\NewModule\Main` - the additional `Main` 
 folder is for the TFS branch (and so may not be necessary if using git, etc.)
@@ -179,7 +179,7 @@ folder is for the TFS branch (and so may not be necessary if using git, etc.)
 To complete the indirection, create a *folder junction* inside the `Modules` folder, pointing up to the 
 new module destination:
 
->     e:\working\directory\OrchardDev\src\Orchard.Web> mklink /j Modules\NewModule ..\..\..\NewModule\Main
+    e:\working\directory\OrchardDev\src\Orchard.Web> mklink /j Modules\NewModule ..\..\..\NewModule\Main
 
 This "tricks" Orchard into believing our Module's soruce is still in the `Modules` folder 
 in `Orchard.Web`.
