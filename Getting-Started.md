@@ -3,7 +3,7 @@
 This is a getting started guide on developing Orchard modules and themes, against the Orchard 
 source repository (1.x branch). 
 
-This guide uses TFS as the source control system for 
+This guide uses git as the source control system for 
 custom code, however another system would work just as well.
 
 ## Prerequesites
@@ -27,7 +27,7 @@ You are ready to begin!
 
 ## Getting the Orchard Source
 
-The first step is to get a fresh copy of the Orchard source, currently (Jauary 2015) hosted on 
+The first step is to get a fresh copy of the Orchard source, currently (February 2015) hosted on 
 CodePlex. The project site URL is http://orchard.codeplex.com/, but we're interested in the 
 *source code URL*, pointing to the git repository that controls Orchard source. From Git Bash
 type the following command:
@@ -70,32 +70,6 @@ the messages about downloading changes). Similarly, we can get status informatio
 Anytime you want to get the recent changes checked in by the community, simply run:
 
     $ git pull origin 1.x
-
-### A bit of indirection
-
-Open up `OrchardDev` in Windows Explorer and you should see Orchard's standard directory layout:
-
-    /OrchardDev
-        /.git
-        /lib
-        /src
-        .gitignore
-        other files...
-        
-Notice the `/.git` subdirectory - this is where git maintains its information on the source code.
-For reasons that will become clear later (I promise!), we are going to **move** this `/.git` directory!
-Again from Git Bash (and your *working directory*), enter the following commands: 
-
-    $ mv OrchardDev/.git  ./.git_OrchardDev  
-    $ echo "gitdir: E:/working/directory/.git_OrchardDev" > OrchardDev/.git
-
-Of course, replace `E:/working/directory/` with the path to your 
-working directory. 
-
-What we have done is moved the "git tree" to the `.git_OrchardDev` *folder* in our working 
-directory, and then created a `.git` *file* inside `OrchardDev` that points git to this *folder*. From
-now on, git's tracking data lives in the `.git_OrchardDev` folder, and the source that it is 
-tracking lives in the `OrchardDev` folder. Whew!
 
 ## Orchard Setup
 
@@ -159,41 +133,39 @@ default module structure: the `Module.txt` (module manifest), `NewModule.csproj`
 ## Source Controlling the Module
 
 Now that we've scaffolded `NewModule`, we want to place its code under source control. We'll 
-use TFS, but git or others would work as well. 
+use git, but TFS or others would work as well. 
 
-Let's exit out of Orchard's command line program:
+Exit out of Orchard's command line program:
 
     orchard> exit
     
     e:\working\directory\OrchardDev\src\Orchard.Web>
 
-Notice we're still in Windows `cmd` - this is good. We're going to do some more indirection, and 
-move our module folder outside of Orchard's source tree. This is to keep Orchard as clean and 
-vanilla as possible. Move `NewModule` up into your original *working directory*:
+### Optional: Isolate the Module
 
-    e:\working\directory\OrchardDev\src\Orchard.Web> move Modules\NewModule ..\..\..\NewModule\Main
+To keep Orchard as clean and vanilla as possible, and manage your own projects outside any single Orchard source, 
+some Windows folder redirection can be employed. 
+Move `NewModule` up into your original *working directory*:
 
-Notice we moved it to `e:\working\directory\NewModule\Main` - the additional `Main` 
-folder is for the TFS branch (and so may not be necessary if using git, etc.)
+    e:\working\directory\OrchardDev\src\Orchard.Web> move Modules\NewModule ..\..\..\NewModule
 
 To complete the indirection, create a *folder junction* inside the `Modules` folder, pointing up to the 
 new module destination:
 
-    e:\working\directory\OrchardDev\src\Orchard.Web> mklink /j Modules\NewModule ..\..\..\NewModule\Main
+    e:\working\directory\OrchardDev\src\Orchard.Web> mklink /j Modules\NewModule ..\..\..\NewModule
 
-This "tricks" Orchard into believing our Module's soruce is still in the `Modules` folder 
-in `Orchard.Web`.
+Finally, create a new git repository inside the Module directory:
 
-Finally, map `e:\working\directory\NewModule` to a TFS repository/team project. 
-
+    e:\working\directory\NewModule> git init
+    
 ## Developing the Module
 
-First things first, you'll need to add the module project to the `Orchard.sln` solution. 
+Firstly, you'll need to add the module project to the `Orchard.sln` solution. 
 
 Back in Visual Studio, Right-click the solution > Add > Existing Project. At this point, you'll be shown the file 
 browser. **Follow the indirection**, and add the project from within 
 `E:\working\directory\OrchardDev\src\Orchard.Web\Modules\NewModule`.  
-This is important if/when you need to add references to other Orchard projects/modules from 
+This is important for maintaining project references to other Orchard projects/modules from 
 within the new module.
 
 Verify everything is all good by launching your Orchard site. In the Dashboard > Modules you should 
