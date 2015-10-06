@@ -1,15 +1,13 @@
 # Develop Orchard from Source
 
-This is a getting started guide on developing Orchard modules and themes, against the Orchard 
-source repository (1.x branch). 
+This is a getting started guide on developing Orchard modules and themes, against the Orchard source repository.
 
 This guide uses git as the source control system for 
 custom code, however another system would work just as well.
 
 ## Prerequesites
 
-This guide uses Git Bash from the [Git for Windows](https://msysgit.github.io/) toolset. Familiarity with command line git and 
-the bash shell would help, but will not be necessary.
+This guide uses Git Bash from the [Git for Windows](https://msysgit.github.io/) toolset. Familiarity with command line git and the bash shell would help, but will not be necessary.
 
 To make sure you are setup properly, open the Git Bash command line, and change into your working 
 directory (paths in Git Bash use the `/` separator character). For example:
@@ -19,23 +17,15 @@ directory (paths in Git Bash use the `/` separator character). For example:
 changes into the Windows directory `E:\working\directory` (you can use upper or 
 lower case drive letters).
 
-Now verify that the command `cmd` works. That's right, the Windows command shell - we're going 
-to use it too, from within Git Bash! Git Bash should be able to find `cmd.exe`, as it is usually in 
-your Windows `%PATH%` (which Git Bash uses to build its `$PATH`). If not, just add it. 
-
-You are ready to begin!
+Now verify that the command `cmd` works. That's right, the Windows command shell - we're going to use it too, from within Git Bash! Git Bash should be able to find `cmd.exe`, as it is usually in your Windows `%PATH%` (which Git Bash uses to build its `$PATH`). If not, just add it. 
 
 ## Getting the Orchard Source
 
-The first step is to get a fresh copy of the Orchard source, currently (February 2015) hosted on 
-CodePlex. The project site URL is http://orchard.codeplex.com/, but we're interested in the 
-*source code URL*, pointing to the git repository that controls Orchard source. From Git Bash
-type the following command:
+The first step is to get a fresh copy of the Orchard source, currently (October 2015) [hosted on GitHub](https://github.com/OrchardCMS/Orchard). From Git Bash type the following command to clone the Orchard source repo:
 
-    $ git clone https://git01.codeplex.com/orchard OrchardDev
+    $ git clone https://github.com/OrchardCMS/Orchard.git OrchardDev
 
-This clones the git repository into the local folder `OrchardDev` inside your working directory. 
-Verify that the clone worked by doing the following:
+This clones the git repository into the local folder `OrchardDev` inside your working directory. Verify that the clone worked by doing the following:
 
     $ cd OrchardDev
     $ git status
@@ -48,28 +38,23 @@ You should see output similar to:
     
     nothing to commit, working directory clean
 
-As stated, we are on the `master` branch - we are viewing the Orchard source code as it exists in 
-the `master` branch. This is the release branch, which always contains the source code for the 
-most recently released stable version of Orchard (`1.8.1` at the time of writing).
+As stated, we are on the `master` branch - we are viewing the Orchard source code as it exists in the `master` branch. This is the release branch, which always contains the source code for the most recently released stable version of Orchard (`1.9.1` at the time of writing).
 
-For developing the latest and greatest, we want to checkout (or switch to) the `1.x` branch, the 
-active development branch. If you're developing against a different branch (e.g. `1.8.x`) the 
-procedure is similar.
+For developing against another release, or the bleeding edge, we want to checkout (or switch to) another branch. To checkout the active development branch, type:
 
-    $ git checkout 1.x
+    $ git checkout dev
 
-This "switches" branches to `1.x`, and in effect gives us a different view of the files (you'll notice
-the messages about downloading changes). Similarly, we can get status information:
+This "switches" branches to `dev`, and gives us a different view of the files (you'll notice the messages about downloading changes). Similarly, we can get status information:
 
     $ git status
-    On branch 1.x
-    Your branch is up-to-date with 'origin/1.x'.
+    On branch dev
+    Your branch is up-to-date with 'origin/dev'.
     
     nothing to commit, working directory clean
 
-Anytime you want to get the recent changes checked in by the community, simply run:
+Anytime you want to get recent changes committed by the community, simply run:
 
-    $ git pull origin 1.x
+    $ git pull origin dev
 
 ## Orchard Setup
 
@@ -77,9 +62,9 @@ Orchard makes it pretty easy to setup a new site. Just open the
 `OrchardDev/src/Orchard.sln` in Visual Studio and hit `ctrl+F5` to run the 
 `Orchard.Web` project.
 
-**Note:** if you are developing against multiple Orchard instances, you may want to modify the 
-*Project Url* in the `Orchard.Web` project to use a different virtual path, before running setup. 
-Right-click > Properties > Web, change to your liking (e.g. http://localhost:30321/OrchardDev) 
+> **Note:** if you are developing against multiple Orchard instances, you may want to modify the *Project Url* in the `Orchard.Web` project to use a different virtual path, before running setup. 
+> 
+> Right-click > Properties > Web, change to your liking (e.g. http://localhost:30321/OrchardDev) 
 and then `Create Virtual Directory`.
 
 From the Orchard setup screen: enter your details, choose your storage
